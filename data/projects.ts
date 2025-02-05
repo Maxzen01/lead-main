@@ -1,0 +1,63 @@
+export const projects = [
+    {
+      id: 1,
+      title: "Gen Ai",
+      des: "Generative AI (GenAI) is a subset of artificial intelligence that focuses on creating new content, such as text, images, audio, and even code, based on patterns learned from existing data. Unlike traditional AI models, which primarily analyze and classify information, GenAI can generate human-like responses, realistic images, and even creative works.",
+      img: "/luxera.png",
+      iconLists: [
+        "/re.svg",
+        "/next.svg",
+        "/tail.svg",
+        "/ts.svg",
+        "/stripe-color.svg",
+        "sanity-color.svg",
+        // "/shadcnui.svg",
+      ],
+      link: "#",
+    },
+    {
+      id: 2,
+      title: "Prompt Eningeering",
+      des: "Prompt Engineering is the practice of designing and optimizing prompts to effectively communicate with generative AI models. It involves crafting precise instructions to guide AI in generating accurate, relevant, and high-quality outputs. Since AI models respond based on the input they receive, well-structured prompts can significantly improve the quality of responses.",
+      img: "/blogify.jpg",
+      iconLists: [
+        "/next.svg",
+        "/tail.svg",
+        "/ts.svg",
+        "/sanity-color.svg",
+        "/c.svg",
+      ],
+      link: "#",
+    },
+    {
+      id: 3,
+      title: "AWS/DEVOPS",
+      des: "AWS (Amazon Web Services) and DevOps together form a powerful combination for automating, scaling, and managing cloud infrastructure efficiently. AWS provides a comprehensive suite of cloud computing services, while DevOps focuses on automating development, deployment, and operations through collaboration and continuous improvement.",
+      img: "/gallerysync.jpg",
+      iconLists: [
+        "/re.svg",
+        "/next.svg",
+        "/tail.svg",
+        "/ts.svg",
+        "/cloudinary-color.svg",
+      ],
+      link: "#",
+    },
+    {
+      id: 4,
+      title: "Digital Marketing",
+      des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
+      img: "/camplore.jpg",
+      iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
+      link: "#",
+    },
+    {
+      id: 5,
+      title: "Digital Marketing",
+      des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
+      img: "/camplore.jpg",
+      iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
+      link: "#",
+    },
+  ];
+  
