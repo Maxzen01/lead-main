@@ -2,68 +2,69 @@ import React from "react";
 import Navbar from "@/components/Hero";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import Link from "next/link";
 
 const courses = [
   {
     title: "Gen AI",
     img: "/luxera.png",
     description: "Explore the world of Generative AI and its real-world applications in various fields.",
-    link: "/gen-ai.js",
+    link: "courses/Gen-ai",
   },
   {
     title: "Prompt Engineering",
     img: "/blogify.jpg",
     description: "Master the art of crafting precise prompts to optimize AI model performance.",
-    link: "#",
+    link: "courses/Prompt-Engineering",
   },
   {
     title: "Cybersecurity Basics",
     img: "/cyber",
     description: "Understand the fundamentals of cybersecurity and how to protect digital assets.",
-    link: "#",
+    link: "courses/Cyber-Security",
   },
   {
     title: "Digital Marketing",
     img: "/camplore.jpg",
     description: "Learn the strategies and tools to create successful digital marketing campaigns.",
-    link: "#",
+    link: "courses/Digital-Marketing",
   },
   {
     title: "AWS & Devops",
     img: "/gallerysync.jpg",
     description: "Gain expertise in AWS cloud services and DevOps practices for modern application deployment.",
-    link: "#",
+    link: "courses/AWS-Devops",
   },
   
   {
     title: "Mean Stack",
-    img: "/mean.jpeg",
+    img: "/meanstack.png",
     description: "Learn MongoDB, Express.js, Angular, and Node.js (MEAN Stack) to build modern, full-stack web applications. ",
-    link: "#",
+    link: "courses/Mean-Stack",
   },
   {
     title: "Python Full Stack",
     img: "/carhub.jpg",
     description: "Learn Python Full Stack Development by building dynamic web applications using Python, Django/Flask for backend, and HTML, CSS, JavaScript, React for frontend.",
-    link: "#",
+    link: "courses/Python-Fullstack",
   },
   {
     title: "Automation Testing",
     img: "/automation.jpeg",
     description: "Learn Automation Testing using tools like Selenium, Cypress, and Playwright to improve software quality and efficiency. ",
-    link: "#",
+    link: "courses/Automation-Testing",
   },
   {
     title: "UI/UX",
     img: "/ui.jpeg",
     description: "Learn UI/UX design principles to create engaging and user-friendly interfaces. Gain expertise in user research, wireframing, prototyping, visual design, and usability testing using tools like Figma, Adobe XD, and Sketch.",
-    link: "#",
+    link: "courses/UI",
   },
   {
     title: "Azure & Devops",
     img: "/azure.jpeg",
     description: "Understand Azure & DevOps methodologies and automate development workflows.",
-    link: "#",
+    link: "courses/Azure-Devops",
   }
 ];
 
@@ -94,9 +95,9 @@ const MoreCourses = () => {
               <div className="w-full text-center mt-4 px-4">
                 <h2 className="text-2xl font-semibold text-gray-800">{course.title}</h2>
                 <p className="text-gray-600 mt-2">{course.description}</p>
-                <a href={course.link} className="mt-4 inline-block text-blue-500 font-semibold">
-                  Learn More →
-                </a>
+                <Link href={course.link} className="mt-4 inline-block text-blue-500 font-semibold">
+  Learn More →
+</Link>
               </div>
             </div>
           ))}

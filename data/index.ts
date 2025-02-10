@@ -1,7 +1,6 @@
 export const navItems = [
   { name: "About Us", link: "#about" },
   { name: "Courses", link: "#projects" },
-  { name: "Blogs", link: "#skills" },
   // { name: "Testimonials", link: "#testimonials" },
   { name: "Contact Us", link: "#contact" },
 ];
@@ -87,7 +86,7 @@ export const projects = [
       "sanity-color.svg",
       // "/shadcnui.svg",
     ],
-    link: "#",
+    link: "courses/Gen-ai",
   },
   {
     id: 2,
@@ -101,7 +100,7 @@ export const projects = [
       "/sanity-color.svg",
       "/c.svg",
     ],
-    link: "#",
+    link: "courses/Prompt-Engineering",
   },
   {
     id: 3,
@@ -115,7 +114,7 @@ export const projects = [
       "/ts.svg",
       "/cloudinary-color.svg",
     ],
-    link: "#",
+    link: "courses/AWS-Devops",
   },
   {
     id: 4,
@@ -123,64 +122,8 @@ export const projects = [
     des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
     img: "/camplore.jpg",
     iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
-    link: "#",
-  },
-  {
-    id: 5,
-    title: "Digital Marketing",
-    des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
-    img: "/camplore.jpg",
-    iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
-    link: "#",
-  },
-  {
-    id: 6,
-    title: "Digital Marketing",
-    des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
-    img: "/camplore.jpg",
-    iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
-    link: "#",
-  },
-  {
-    id: 6,
-    title: "Digital Marketing",
-    des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
-    img: "/camplore.jpg",
-    iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
-    link: "#",
-  },
-  {
-    id: 7,
-    title: "Digital Marketing",
-    des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
-    img: "/camplore.jpg",
-    iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
-    link: "#",
-  },
-  {
-    id: 8,
-    title: "Digital Marketing",
-    des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
-    img: "/camplore.jpg",
-    iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
-    link: "#",
-  },
-  {
-    id: 9,
-    title: "Digital Marketing",
-    des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
-    img: "/camplore.jpg",
-    iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
-    link: "#",
-  },
-  {
-    id: 10,
-    title: "Digital Marketing",
-    des: "Digital Marketing is the practice of promoting products, services, or brands using online channels such as search engines, social media, email, and websites. It leverages data, automation, and targeted strategies to reach and engage potential customers effectively.",
-    img: "/camplore.jpg",
-    iconLists: ["/re.svg", "/next.svg", "/tail.svg", "/ts.svg"],
-    link: "#",
-  },
+    link: "courses/Digital-Marketing",
+  }
 ];
 
 export const testimonials = [
