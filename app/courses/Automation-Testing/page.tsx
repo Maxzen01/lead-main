@@ -44,11 +44,12 @@ const AutomationTestingPage = () => {
   const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData(prevState => ({
+      ...prevState,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +57,7 @@ const AutomationTestingPage = () => {
     setMessage('');
 
     try {
-      const response = await axios.post('/server.js', formData);
+      const response = await axios.post('/api/sentry-example-api', formData);
       setMessage(response.data.message);
     } catch (err) {
       setError('An error occurred. Please try again.');

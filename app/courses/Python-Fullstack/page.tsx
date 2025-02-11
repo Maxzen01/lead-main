@@ -1,7 +1,10 @@
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 import Navbar from "@/components/Hero";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { FaPython, FaServer, FaCode, FaDatabase } from "react-icons/fa";
+import { FaPython, FaServer, FaDatabase, FaCode, FaHandsHelping } from "react-icons/fa";
 
 const SectionTitle = ({ title }) => (
   <h2 className="text-3xl font-semibold text-center mb-6 text-black dark:text-white">{title}</h2>
@@ -30,52 +33,82 @@ const ListItem = ({ items }) => (
 );
 
 const PythonFullStackPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    course: 'Python Full Stack',
+  });
+
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleChange = (e) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await axios.post('/api/sentry-example-api', formData);
+      setMessage(response.data.message);
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
+  };
+
   const courseOverview = [
-    "Master Python for back-end development and full-stack application building.",
-    "Learn web development with Django, Flask, and APIs in Python.",
-    "Understand database management with PostgreSQL or MySQL.",
-    "Build front-end user interfaces with HTML, CSS, and JavaScript, integrating them with Python back-ends."
+    "Learn to build dynamic websites using Python and Django.",
+    "Understand front-end technologies like HTML, CSS, and JavaScript.",
+    "Master database management using PostgreSQL and MongoDB.",
+    "Hands-on experience in creating RESTful APIs and integrating with front-end.",
+    "Learn how to deploy and manage Python applications using cloud services."
   ];
 
   const keyHighlights = [
-    { title: "Full-Stack Training", icon: <FaPython />, description: "Build dynamic full-stack applications using Python for the back-end." },
-    { title: "Web Development with Django & Flask", icon: <FaServer />, description: "Learn how to build web applications using Django and Flask." },
-    { title: "Database Management", icon: <FaDatabase />, description: "Master database operations with PostgreSQL, MySQL, or SQLite." },
-    { title: "Front-End Development", icon: <FaCode />, description: "Create interactive UIs with HTML, CSS, and JavaScript." }
+    { title: "Full-Stack Mastery", icon: <FaPython />, description: "Master both front-end and back-end development using Python." },
+    { title: "Real Projects", icon: <FaServer />, description: "Work on real-world projects, from databases to deployment." },
+    { title: "Backend Development", icon: <FaDatabase />, description: "Create powerful backends using Django and Flask." },
+    { title: "Job Assistance", icon: <FaHandsHelping />, description: "Support for internships and job placements." }
   ];
 
   const curriculumItems = [
-    "Introduction to Full-Stack Development with Python",
-    "Setting Up the Development Environment",
-    "Python Basics and Advanced Topics",
-    "Web Development with Django & Flask",
-    "Database Management and SQL with Python",
+    "Introduction to Python for Web Development",
+    "HTML, CSS, and JavaScript Basics",
+    "Introduction to Web Frameworks: Django and Flask",
+    "Database Management: PostgreSQL, MySQL, MongoDB",
     "Building RESTful APIs with Django Rest Framework",
-    "Front-End Technologies: HTML, CSS, JavaScript",
-    "Integrating Front-End with Back-End",
-    "Authentication and Authorization",
-    "Testing and Debugging Python Applications",
-    "Deploying Full-Stack Python Applications",
-    "Project-Based Learning: Build a Full-Stack Application",
-    "Career Opportunities for Python Full-Stack Developers"
+    "Authentication and Authorization in Web Applications",
+    "Front-End Frameworks: React and Angular",
+    "Deploying Python Applications with Docker and Cloud Platforms",
+    "Unit Testing and Debugging",
+    "Version Control with Git and GitHub",
+    "Building Real-Time Web Applications",
+    "Capstone Project: Full-Stack Application"
   ];
 
   return (
     <main className="dark:bg-gradient-to-r from-gray-900 to-black min-h-screen flex flex-col">
       <Navbar />
       <section className="container mx-auto px-5 py-10 flex-grow">
-        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Python Full-Stack Training</h1>
+        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Python Full Stack Development</h1>
 
         <div className="flex flex-col md:flex-row gap-8 items-center">
           <Image
             src="/carhub.jpg"
-            alt="Python Full-Stack"
+            alt="Python Full Stack"
             width={400}
             height={300}
             className="rounded-lg shadow-xl"
           />
           <p className="text-lg text-black dark:text-white mt-6 md:mt-0 md:w-2/3">
-            Master Python full-stack development with frameworks like Django and Flask, along with front-end technologies to create robust web applications.
+            Python Full Stack Development is the process of building end-to-end applications using Python. This course covers both front-end and back-end development, including the most popular frameworks like Django, Flask, and React.
           </p>
         </div>
 
@@ -104,49 +137,45 @@ const PythonFullStackPage = () => {
         </div>
 
         <div className="mt-12">
-        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
-          <form className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
+          <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Name *</label>
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Phone *</label>
               <input
                 type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Email *</label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold">Select Course *</label>
-              <select className="w-full p-3 border rounded-lg" required>
-                <option>Python Full-Stack</option>
-              </select>
-            </div>
-
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {message && <p className="text-green-500 text-center">{message}</p>}
             <div className="text-center">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Enroll Now
-              </button>
+              <button type="submit" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">Enroll Now</button>
             </div>
           </form>
         </div>

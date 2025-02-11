@@ -1,7 +1,10 @@
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 import Navbar from "@/components/Hero";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { FaCertificate, FaProjectDiagram, FaRegClock, FaHandsHelping } from "react-icons/fa";
+import { FaBrain, FaRobot, FaCode, FaCogs, FaCertificate, FaHandsHelping } from "react-icons/fa";
 
 const SectionTitle = ({ title }) => (
   <h2 className="text-3xl font-semibold text-center mb-6 text-black dark:text-white">{title}</h2>
@@ -30,33 +33,62 @@ const ListItem = ({ items }) => (
 );
 
 const GenAIPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    course: 'Generative AI',
+  });
+
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleChange = (e) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await axios.post('/api/sentry-example-api', formData);
+      setMessage(response.data.message);
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
+  };
+
   const courseOverview = [
-    "Understanding Generative AI and its real-world applications.",
-    "Deep dive into AI models like GPT, DALL·E, and Stable Diffusion.",
-    "Hands-on projects in text, image, and video generation.",
-    "Exploring ethical concerns and the future of Generative AI."
+    "Introduction to Generative AI, deep learning, and neural networks.",
+    "Hands-on experience with models like GPT, DALL·E, and StyleGAN.",
+    "Learn the theory behind generative models and their applications.",
+    "Explore ethical considerations and future trends in AI technology."
   ];
 
   const keyHighlights = [
-    { title: "Expert Learning", icon: <FaRegClock />, description: "100+ hours of expert-led learning." },
-    { title: "Real Projects", icon: <FaProjectDiagram />, description: "Real-world projects and AI-driven solutions." },
-    { title: "Certification", icon: <FaCertificate />, description: "Industry-recognized certification." },
-    { title: "Placement Assistance", icon: <FaHandsHelping />, description: "Internships and placement assistance." }
+    { title: "AI Fundamentals", icon: <FaBrain />, description: "Learn the fundamentals of artificial intelligence and machine learning." },
+    { title: "Generative Models", icon: <FaRobot />, description: "Explore powerful generative models like GPT and DALL·E." },
+    { title: "Certifications", icon: <FaCertificate />, description: "Prepare for certifications in AI and machine learning." },
+    { title: "Job Assistance", icon: <FaHandsHelping />, description: "Internship and placement support in AI and tech companies." }
   ];
 
   const curriculumItems = [
-    "Introduction to Generative AI",
-    "Machine Learning Foundations for Generative AI",
-    "Generative Adversarial Networks (GANs)",
-    "Variational Autoencoders (VAEs)",
-    "Transformers in Generative AI",
-    "Diffusion Models",
-    "AI-Powered Content Creation",
-    "Ethics in Generative AI",
-    "Advanced Generative AI Techniques",
-    "Building AI-Powered Applications",
-    "Real-World Projects in Generative AI",
-    "The Future of Generative AI"
+    "Introduction to AI and Machine Learning",
+    "Deep Learning and Neural Networks",
+    "Generative Models: GANs, GPT, and StyleGAN",
+    "Applications of Generative AI in Content Creation",
+    "Ethics of AI and Bias in Machine Learning",
+    "Natural Language Processing (NLP)",
+    "AI for Art, Music, and Video Generation",
+    "Building AI Models with TensorFlow and PyTorch",
+    "AI in Healthcare, Business, and Marketing",
+    "Future of AI: Trends and Opportunities",
+    "AI Deployment and Integration in Real-World Applications"
   ];
 
   return (
@@ -67,15 +99,14 @@ const GenAIPage = () => {
 
         <div className="flex flex-col md:flex-row gap-8 items-center">
           <Image
-            src="/luxera.png"
+            src="/gen-ai.jpeg"
             alt="Generative AI"
             width={400}
             height={300}
             className="rounded-lg shadow-xl"
           />
           <p className="text-lg text-black dark:text-white mt-6 md:mt-0 md:w-2/3">
-            Generative AI is a cutting-edge field of artificial intelligence that enables machines to generate human-like text, images, and more. 
-            Explore the fundamentals, deep learning models, and real-world applications through our comprehensive training program.
+            Generative AI is transforming industries through innovative solutions. Learn how to create and deploy advanced AI models that generate new content, data, and ideas.
           </p>
         </div>
 
@@ -104,49 +135,45 @@ const GenAIPage = () => {
         </div>
 
         <div className="mt-12">
-        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
-          <form className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
+          <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Name *</label>
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Phone *</label>
               <input
                 type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Email *</label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold">Select Course *</label>
-              <select className="w-full p-3 border rounded-lg" required>
-                <option>Generative AI</option>
-              </select>
-            </div>
-
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {message && <p className="text-green-500 text-center">{message}</p>}
             <div className="text-center">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Enroll Now
-              </button>
+              <button type="submit" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">Enroll Now</button>
             </div>
           </form>
         </div>

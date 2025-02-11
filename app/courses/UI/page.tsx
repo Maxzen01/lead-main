@@ -1,7 +1,10 @@
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 import Navbar from "@/components/Hero";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { FaPaintBrush, FaUsers, FaLaptop, FaSearch } from "react-icons/fa";
+import { FaBrush, FaPalette, FaLaptopCode, FaUsers, FaHandsHelping } from "react-icons/fa";
 
 const SectionTitle = ({ title }) => (
   <h2 className="text-3xl font-semibold text-center mb-6 text-black dark:text-white">{title}</h2>
@@ -30,40 +33,71 @@ const ListItem = ({ items }) => (
 );
 
 const UIUXPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    course: 'UI/UX Design',
+  });
+
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleChange = (e) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await axios.post('/api/sentry-example-api', formData);
+      setMessage(response.data.message);
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
+  };
+
   const courseOverview = [
-    "Learn the fundamentals of UI/UX design, including user-centered design principles.",
-    "Master the process of creating wireframes, prototypes, and high-fidelity designs.",
-    "Understand how to conduct user research, usability testing, and user interviews.",
-    "Get hands-on experience using tools like Figma, Adobe XD, and Sketch."
+    "Learn the fundamentals of UI/UX design, including wireframing, prototyping, and user research.",
+    "Master industry-standard design tools like Figma, Adobe XD, and Sketch.",
+    "Understand user-centered design principles and usability testing.",
+    "Hands-on projects to build your portfolio and gain real-world experience.",
+    "Prepare for a career in UI/UX design, including resume building and interview preparation."
   ];
 
   const keyHighlights = [
-    { title: "Design Thinking", icon: <FaSearch />, description: "Learn the human-centered approach to design through user research and testing." },
-    { title: "UI/UX Tools", icon: <FaLaptop />, description: "Master design tools like Figma, Adobe XD, and Sketch for professional design work." },
-    { title: "Prototyping", icon: <FaUsers />, description: "Create interactive prototypes to visualize user flows and design functionality." },
-    { title: "User Experience", icon: <FaPaintBrush />, description: "Understand how to design with empathy and build experiences that engage users." }
+    { title: "UI/UX Mastery", icon: <FaBrush />, description: "Master the skills needed to design user-friendly and aesthetically pleasing interfaces." },
+    { title: "Real-World Projects", icon: <FaLaptopCode />, description: "Build real-world design projects for your portfolio." },
+    { title: "User-Centered Design", icon: <FaUsers />, description: "Learn how to design with the user at the center of your process." },
+    { title: "Job Assistance", icon: <FaHandsHelping />, description: "Get support in landing your first UI/UX design job." }
   ];
 
   const curriculumItems = [
     "Introduction to UI/UX Design",
-    "Design Thinking and Problem Solving",
-    "User Research and Usability Testing",
+    "Design Thinking and User-Centered Design Principles",
     "Wireframing and Prototyping",
-    "UI Design Principles and Tools",
-    "Creating High-Fidelity Mockups",
-    "Interaction Design and Microinteractions",
-    "Designing for Mobile and Web Platforms",
-    "User-Centered Design and Accessibility",
-    "Building a UX Portfolio",
-    "Job Search Tips for UI/UX Designers",
-    "UI/UX Design Best Practices"
+    "User Research and Personas",
+    "Building Interactive Prototypes in Figma",
+    "Design Tools: Figma, Adobe XD, and Sketch",
+    "Usability Testing and Feedback Analysis",
+    "Mobile and Web Design Best Practices",
+    "Creating Design Systems",
+    "User Interface (UI) Design: Colors, Typography, and Layout",
+    "UX Design: User Journeys, Wireflows, and Prototyping",
+    "Capstone Project: Designing a Complete User Experience"
   ];
 
   return (
     <main className="dark:bg-gradient-to-r from-gray-900 to-black min-h-screen flex flex-col">
       <Navbar />
       <section className="container mx-auto px-5 py-10 flex-grow">
-        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">UI/UX Design Training</h1>
+        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">UI/UX Design</h1>
 
         <div className="flex flex-col md:flex-row gap-8 items-center">
           <Image
@@ -74,7 +108,7 @@ const UIUXPage = () => {
             className="rounded-lg shadow-xl"
           />
           <p className="text-lg text-black dark:text-white mt-6 md:mt-0 md:w-2/3">
-            Become a skilled UI/UX designer with a comprehensive understanding of design thinking, user research, prototyping, and high-fidelity design tools.
+            UI/UX Design is the art and science of creating seamless and engaging digital experiences. This course covers everything from the fundamentals of design to building interactive prototypes using industry-standard tools.
           </p>
         </div>
 
@@ -103,49 +137,45 @@ const UIUXPage = () => {
         </div>
 
         <div className="mt-12">
-        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
-          <form className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
+          <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Name *</label>
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Phone *</label>
               <input
                 type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Email *</label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold">Select Course *</label>
-              <select className="w-full p-3 border rounded-lg" required>
-                <option>UI/UX Design</option>
-              </select>
-            </div>
-
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {message && <p className="text-green-500 text-center">{message}</p>}
             <div className="text-center">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Enroll Now
-              </button>
+              <button type="submit" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">Enroll Now</button>
             </div>
           </form>
         </div>

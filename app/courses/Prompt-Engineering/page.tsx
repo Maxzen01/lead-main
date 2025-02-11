@@ -1,7 +1,10 @@
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 import Navbar from "@/components/Hero";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { FaCertificate, FaProjectDiagram, FaRegClock, FaHandsHelping } from "react-icons/fa";
+import { FaBrain, FaKeyboard, FaCogs, FaRobot, FaHandsHelping } from "react-icons/fa";
 
 const SectionTitle = ({ title }) => (
   <h2 className="text-3xl font-semibold text-center mb-6 text-black dark:text-white">{title}</h2>
@@ -30,31 +33,63 @@ const ListItem = ({ items }) => (
 );
 
 const PromptEngineeringPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    course: 'Prompt Engineering',
+  });
+
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleChange = (e) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await axios.post('/api/sentry-example-api', formData);
+      setMessage(response.data.message);
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
+  };
+
   const courseOverview = [
-    "Introduction to Prompt Engineering and its significance.",
-    "Crafting effective prompts for AI models.",
-    "Understanding model behavior and tuning prompts.",
-    "Ethical considerations and best practices in AI prompting."
+    "Introduction to Prompt Engineering and its importance in AI.",
+    "Learn how AI models process and interpret input prompts.",
+    "Hands-on experience with prompt optimization for different tasks.",
+    "Best practices for effective communication with AI systems.",
+    "Exploring ethical considerations and biases in prompt design."
   ];
 
   const keyHighlights = [
-    { title: "Expert Learning", icon: <FaRegClock />, description: "80+ hours of expert-led training." },
-    { title: "Real Projects", icon: <FaProjectDiagram />, description: "Hands-on practice with AI models." },
-    { title: "Certification", icon: <FaCertificate />, description: "Industry-recognized certification." },
-    { title: "Placement Assistance", icon: <FaHandsHelping />, description: "Internship and career support." }
+    { title: "AI Expertise", icon: <FaBrain />, description: "Gain expertise in interacting with AI models effectively." },
+    { title: "Real-World Application", icon: <FaRobot />, description: "Work on projects to optimize AI models for various tasks." },
+    { title: "Certification", icon: <FaCertificate />, description: "Earn certification in Prompt Engineering." },
+    { title: "Job Assistance", icon: <FaHandsHelping />, description: "Receive support for job placements and internships." }
   ];
 
   const curriculumItems = [
-    "Introduction to AI and NLP",
-    "The Fundamentals of Prompt Engineering",
-    "Optimizing Prompts for Text Generation",
-    "Advanced Prompt Techniques",
-    "Fine-tuning AI Responses",
-    "Use Cases in Business and Research",
-    "Ethics and Bias in AI Prompting",
-    "Developing AI-Powered Applications",
-    "Real-World Projects in Prompt Engineering",
-    "Future Trends in Prompt Engineering"
+    "Introduction to Prompt Engineering and AI Models",
+    "Understanding AI Model Architecture and Behavior",
+    "Crafting Clear and Effective Prompts",
+    "Optimizing Prompts for Accuracy and Performance",
+    "Using Prompts for Text Generation, Summarization, and Translation",
+    "Fine-Tuning Prompts for Specific Applications",
+    "Ethics and Bias in Prompt Engineering",
+    "Advanced Prompt Techniques: Few-Shot and Zero-Shot Learning",
+    "Building Custom Prompts for AI Tools and Platforms",
+    "Prompt Engineering in Real-World Applications (e.g., Chatbots, Content Generation)",
+    "Testing and Evaluating Prompt Performance"
   ];
 
   return (
@@ -72,7 +107,7 @@ const PromptEngineeringPage = () => {
             className="rounded-lg shadow-xl"
           />
           <p className="text-lg text-black dark:text-white mt-6 md:mt-0 md:w-2/3">
-            Prompt Engineering is the art of crafting inputs that optimize AI responses. Learn how to structure prompts, refine outputs, and harness AI models like GPT for practical applications.
+            Prompt engineering is the art of designing and optimizing prompts to get the most accurate and effective responses from AI models. In this course, you will learn the techniques and best practices for creating powerful prompts for various AI systems and tasks.
           </p>
         </div>
 
@@ -102,33 +137,44 @@ const PromptEngineeringPage = () => {
 
         <div className="mt-12">
           <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
-          <form className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Name *</label>
-              <input type="text" className="w-full p-3 border rounded-lg" required />
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg"
+                required
+              />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Phone *</label>
-              <input type="tel" className="w-full p-3 border rounded-lg" required />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg"
+                required
+              />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Email *</label>
-              <input type="email" className="w-full p-3 border rounded-lg" required />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg"
+                required
+              />
             </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold">Select Course *</label>
-              <select className="w-full p-3 border rounded-lg" required>
-                <option>Prompt Engineering</option>
-              </select>
-            </div>
-
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {message && <p className="text-green-500 text-center">{message}</p>}
             <div className="text-center">
-              <button type="submit" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                Enroll Now
-              </button>
+              <button type="submit" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">Enroll Now</button>
             </div>
           </form>
         </div>

@@ -1,7 +1,10 @@
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 import Navbar from "@/components/Hero";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { FaCloud, FaTools, FaCogs, FaCertificate } from "react-icons/fa";
+import { FaCloud, FaTools, FaProjectDiagram, FaRegClock, FaCertificate, FaHandsHelping } from "react-icons/fa";
 
 const SectionTitle = ({ title }) => (
   <h2 className="text-3xl font-semibold text-center mb-6 text-black dark:text-white">{title}</h2>
@@ -30,39 +33,70 @@ const ListItem = ({ items }) => (
 );
 
 const AzureDevOpsPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    course: 'Azure DevOps',
+  });
+
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleChange = (e) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await axios.post('/api/sentry-example-api', formData);
+      setMessage(response.data.message);
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
+  };
+
   const courseOverview = [
-    "Introduction to Azure DevOps and CI/CD pipelines.",
-    "Infrastructure as Code (IaC) using Terraform and ARM templates.",
-    "Azure Kubernetes Service (AKS) and containerization strategies.",
-    "Monitoring, security, and compliance in Azure DevOps.",
-    "Real-world projects and best practices."
+    "Introduction to Azure and Cloud Computing.",
+    "Deep dive into Azure services like VMs, Blob Storage, SQL Databases, and Functions.",
+    "Hands-on experience with CI/CD pipelines using Azure DevOps and Jenkins.",
+    "Best practices, monitoring, and security in Azure DevOps."
   ];
 
   const keyHighlights = [
-    { title: "Expert Learning", icon: <FaTools />, description: "Hands-on training with Azure DevOps tools." },
-    { title: "CI/CD Pipelines", icon: <FaCogs />, description: "Build and deploy applications seamlessly." },
-    { title: "Cloud Automation", icon: <FaCloud />, description: "Master automation in Azure environments." },
-    { title: "Certification", icon: <FaCertificate />, description: "Get industry-recognized certification." }
+    { title: "Cloud Expertise", icon: <FaCloud />, description: "Master Azure cloud infrastructure." },
+    { title: "Real Projects", icon: <FaProjectDiagram />, description: "Hands-on projects with real-world scenarios." },
+    { title: "Certification", icon: <FaCertificate />, description: "Azure DevOps Engineer certification preparation." },
+    { title: "Job Assistance", icon: <FaHandsHelping />, description: "Internship and placement support." }
   ];
 
   const curriculumItems = [
-    "Introduction to Azure DevOps",
-    "Setting Up CI/CD Pipelines",
-    "Infrastructure as Code with Terraform",
-    "Kubernetes and Docker in Azure",
-    "Monitoring and Security Best Practices",
-    "Automating Workflows with Azure DevOps",
-    "Handling Secrets and Environment Variables",
-    "Azure Boards and Agile Project Management",
-    "Advanced DevOps Strategies",
-    "Real-World Azure DevOps Projects"
+    "Introduction to Azure and Cloud Computing",
+    "Azure IAM and Security Best Practices",
+    "Compute Services: Virtual Machines, Functions, and Auto Scaling",
+    "Networking: Virtual Networks, Load Balancers, and DNS Services",
+    "Storage: Blob Storage, Files, and SQL Databases",
+    "Database Services: Azure SQL, Cosmos DB, and Synapse Analytics",
+    "CI/CD with Azure DevOps and Jenkins",
+    "Infrastructure as Code (IaC) with Terraform and Bicep",
+    "Monitoring and Logging: Azure Monitor, Log Analytics, and App Insights",
+    "Azure Security and Compliance Best Practices",
+    "Deploying and Managing Kubernetes with AKS",
+    "Serverless Architectures with Azure Functions and API Management"
   ];
 
   return (
     <main className="dark:bg-gradient-to-r from-gray-900 to-black min-h-screen flex flex-col">
       <Navbar />
       <section className="container mx-auto px-5 py-10 flex-grow">
-        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Azure DevOps Training</h1>
+        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Azure DevOps</h1>
 
         <div className="flex flex-col md:flex-row gap-8 items-center">
           <Image
@@ -73,8 +107,8 @@ const AzureDevOpsPage = () => {
             className="rounded-lg shadow-xl"
           />
           <p className="text-lg text-black dark:text-white mt-6 md:mt-0 md:w-2/3">
-            Learn Azure DevOps to streamline software development, automate infrastructure management, and enhance application delivery.
-            Master CI/CD, Kubernetes, Terraform, and more in our expert-led training.
+            Azure DevOps is a powerful platform for cloud-based development and operations. 
+            Learn how to leverage Azure services, automate workflows, and implement robust CI/CD pipelines.
           </p>
         </div>
 
@@ -104,33 +138,44 @@ const AzureDevOpsPage = () => {
 
         <div className="mt-12">
           <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
-          <form className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Name *</label>
-              <input type="text" className="w-full p-3 border rounded-lg" required />
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg"
+                required
+              />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Phone *</label>
-              <input type="tel" className="w-full p-3 border rounded-lg" required />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg"
+                required
+              />
             </div>
-
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Email *</label>
-              <input type="email" className="w-full p-3 border rounded-lg" required />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-3 border rounded-lg"
+                required
+              />
             </div>
-
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold">Select Course *</label>
-              <select className="w-full p-3 border rounded-lg" required>
-                <option>Azure DevOps</option>
-              </select>
-            </div>
-
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {message && <p className="text-green-500 text-center">{message}</p>}
             <div className="text-center">
-              <button type="submit" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                Enroll Now
-              </button>
+              <button type="submit" className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">Enroll Now</button>
             </div>
           </form>
         </div>

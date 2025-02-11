@@ -1,7 +1,10 @@
+'use client';
+import { useState } from 'react';
+import axios from 'axios';
 import Navbar from "@/components/Hero";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { FaCertificate, FaProjectDiagram, FaRegClock, FaHandsHelping } from "react-icons/fa";
+import { FaCloud, FaTools, FaProjectDiagram, FaRegClock, FaCertificate, FaHandsHelping } from "react-icons/fa";
 
 const SectionTitle = ({ title }) => (
   <h2 className="text-3xl font-semibold text-center mb-6 text-black dark:text-white">{title}</h2>
@@ -29,35 +32,64 @@ const ListItem = ({ items }) => (
   </ul>
 );
 
-const AwsDevOpsPage = () => {
+const AWSDevOpsPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    course: 'AWS DevOps',
+  });
+
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleChange = (e) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await axios.post('/api/sentry-example-api', formData);
+      setMessage(response.data.message);
+    } catch (err) {
+      setError('An error occurred. Please try again.');
+    }
+  };
+
   const courseOverview = [
-    "Introduction to AWS and DevOps Principles.",
-    "Setting up CI/CD pipelines with AWS tools.",
-    "Infrastructure as Code (IaC) using Terraform and AWS CloudFormation.",
-    "Monitoring and Logging with AWS CloudWatch and ELK Stack.",
-    "Security Best Practices in AWS DevOps.",
-    "Hands-on projects on deploying scalable applications."
+    "Understanding AWS and Cloud Computing.",
+    "Deep dive into AWS services like EC2, S3, RDS, Lambda, and more.",
+    "Hands-on experience with CI/CD pipelines using AWS CodePipeline and Jenkins.",
+    "Best practices, monitoring, and security in AWS DevOps."
   ];
 
   const keyHighlights = [
-    { title: "Expert Learning", icon: <FaRegClock />, description: "100+ hours of expert-led training." },
-    { title: "Real Projects", icon: <FaProjectDiagram />, description: "Industry-level projects on AWS DevOps." },
-    { title: "Certification", icon: <FaCertificate />, description: "AWS and DevOps certifications guidance." },
-    { title: "Placement Assistance", icon: <FaHandsHelping />, description: "Internships and job support in AWS DevOps." }
+    { title: "Cloud Expertise", icon: <FaCloud />, description: "Master AWS cloud infrastructure." },
+    { title: "Real Projects", icon: <FaProjectDiagram />, description: "Hands-on projects with real-world scenarios." },
+    { title: "Certification", icon: <FaCertificate />, description: "AWS Certified DevOps Engineer preparation." },
+    { title: "Job Assistance", icon: <FaHandsHelping />, description: "Internship and placement support." }
   ];
 
   const curriculumItems = [
-    "Introduction to AWS and DevOps",
-    "AWS Compute Services (EC2, Lambda, ECS, EKS)",
-    "CI/CD Pipelines with AWS CodePipeline and Jenkins",
+    "Introduction to AWS and Cloud Computing",
+    "AWS IAM and Security Best Practices",
+    "Compute Services: EC2, Lambda, and Auto Scaling",
+    "Networking: VPC, Route 53, and Load Balancers",
+    "Storage: S3, EBS, and Glacier",
+    "Database Services: RDS, DynamoDB, and Redshift",
+    "CI/CD with AWS CodePipeline and Jenkins",
     "Infrastructure as Code (IaC) with Terraform and CloudFormation",
-    "Monitoring & Logging (CloudWatch, ELK Stack)",
-    "AWS Security Best Practices",
-    "Serverless Computing and Microservices",
-    "Scaling Applications on AWS",
-    "Disaster Recovery and High Availability",
-    "Real-World Projects and Deployment Strategies",
-    "Future Trends in AWS DevOps"
+    "Monitoring and Logging: CloudWatch, CloudTrail, and ELK Stack",
+    "AWS Security and Compliance Best Practices",
+    "Deploying and Managing Kubernetes with EKS",
+    "Serverless Architectures with AWS Lambda and API Gateway"
   ];
 
   return (
@@ -75,8 +107,8 @@ const AwsDevOpsPage = () => {
             className="rounded-lg shadow-xl"
           />
           <p className="text-lg text-black dark:text-white mt-6 md:mt-0 md:w-2/3">
-            AWS DevOps combines cloud computing and DevOps practices to enable continuous development, integration, and deployment. 
-            Learn how to build scalable, secure, and automated AWS infrastructures through real-world projects and best practices.
+            AWS DevOps is an essential practice for cloud-based development and operations. 
+            Learn how to leverage AWS services, automate workflows, and implement robust CI/CD pipelines.
           </p>
         </div>
 
@@ -105,12 +137,15 @@ const AwsDevOpsPage = () => {
         </div>
 
         <div className="mt-12">
-        <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
-          <form className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
+          <h1 className="text-4xl font-bold text-center mb-6 text-black dark:text-white">Enrollment</h1>
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-lg mx-auto mt-6">
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold">Name *</label>
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
@@ -120,6 +155,9 @@ const AwsDevOpsPage = () => {
               <label className="block text-gray-700 font-semibold">Phone *</label>
               <input
                 type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
@@ -129,17 +167,16 @@ const AwsDevOpsPage = () => {
               <label className="block text-gray-700 font-semibold">Email *</label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full p-3 border rounded-lg"
                 required
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold">Select Course *</label>
-              <select className="w-full p-3 border rounded-lg" required>
-                <option>AWS DevOps</option>
-              </select>
-            </div>
+            {error && <p className="text-red-500 text-center">{error}</p>}
+            {message && <p className="text-green-500 text-center">{message}</p>}
 
             <div className="text-center">
               <button
@@ -157,4 +194,4 @@ const AwsDevOpsPage = () => {
   );
 };
 
-export default AwsDevOpsPage;
+export default AWSDevOpsPage;
